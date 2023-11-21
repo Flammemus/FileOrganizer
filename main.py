@@ -1,8 +1,10 @@
 import os
 import shutil
 
-desktopPath = os.path.expanduser("/Users/asmusaskovbaunstrup/Desktop")
+desktopPath = "/Users/asmusaskovbaunstrup/Desktop"
+print(desktopPath)
 desktopFiles = os.listdir(desktopPath)
+print(desktopFiles)
 pngFiles = [file for file in desktopFiles if file.endswith('.png')]
 destination = os.path.join(desktopPath, "PhotosTestFolder")
 
