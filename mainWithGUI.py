@@ -1,6 +1,7 @@
 import os
 import shutil
 import time
+from gui import data
 
 main = True
 startup = False
@@ -13,26 +14,26 @@ while main:
 
     foldersInDesktop = [item for item in desktopFiles if os.path.isdir(os.path.join(desktopPath, item))]
 
-    print("@*===============================*@")
-
-    print("\nAll folders on the desktop:")
-    for i in foldersInDesktop:
-        print("* " + i)
+    print("\nAll folders on the desktop:", foldersInDesktop)
 
     startup = True
     while startup:
 
-        folderName = input("\nName of folder: ")
+        folderNameGUI = data.get('folderName', '')
+        fileTypeGUI = data.get('fileType', '')
+
+        print(f"\nName of folder: {folderNameGUI}")
+        print(f"File type: {fileTypeGUI}")
         
-        if folderName in desktopFiles:
-            destination = os.path.join(desktopPath, folderName)
+        if folderNameGUI in desktopFiles:
+            destination = os.path.join(desktopPath, folderNameGUI)
 
-            fileType = input("Filetype you want to move ( .png .txt etc ): ")
+            fileType = fileTypeGUI
 
-            if not fileType.startswith("."):
-                fileType = "." + fileType
+            # if not fileType.startswith("."):
+            #     fileType = "." + fileType
 
-            print(f"\nMoving all {fileType} to {folderName}\n")
+            print(f"\nMoving all {fileType} to {folderNameGUI}\n")
             startup = False
         
         else:
@@ -42,11 +43,11 @@ while main:
     while run:
 
         desktopFiles = os.listdir(desktopPath)
-        pngFiles = [file for file in desktopFiles if file.endswith(fileType)]
+        pngFiles = [file for file in desktopFiles if file.endswith(fileTypeGUI)]
 
         if pngFiles:
 
-            print(f"\nFound the following {fileType} files on the desktop:")
+            print(f"\nFound the following {fileTypeGUI} files on the desktop:")
 
             for i in pngFiles:
                 print(i)
@@ -60,3 +61,6 @@ while main:
                 print(f"Successfully moved {pngFile} to {destination}\n")
 
         time.sleep(2)
+
+    if input("Type 'exit' to stop the program: ").lower() == "exit":
+        main = False
